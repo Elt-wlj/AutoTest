@@ -1,0 +1,12 @@
+*** Settings ***
+Resource          ElementResource.txt
+
+*** Keywords ***
+正确用户名和密码
+    [Arguments]    ${search}
+    打开浏览器    http://192.168.1.37/user/login
+    输入用户名    ${search}
+    输入密码    ${search}
+    点击登陆按钮
+    关闭浏览器
+    [Teardown]

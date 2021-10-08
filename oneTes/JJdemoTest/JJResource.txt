@@ -1,0 +1,973 @@
+*** Keywords ***
+LoginTestFail
+    # 方法一
+    open browser    http://192.168.1.37:81/user/login    gc
+    Maximize Browser Window    # 浏览器最大化
+    input text    xpath=//*[@id='username']    admin    # 输入用户名
+    ${user}    Get Value    xpath=//*[@id='username']
+    Comment    ${user}    Set Variable    admin    # 设置用户名为admin
+    Input Password    xpath=//*[@id='password']    123456    # 输入密码
+    ${pwd}    Get Value    xpath=//*[@id='password']
+    Comment    ${pwd}    Set Variable    admin
+    Run Keyword If    '${user}'=='admin' and '${pwd}'== '123456'    click button    xpath=//*[@id='formLogin']/div/div[3]/div/div/span/button
+    ...    ELSE    log    用户名错误或密码错误    # 将输入的值进行比较
+    log    用户名和密码输入正确
+    Comment    click button    xpath=//*[@id='formLogin']/div/div[3]/div/div/span/button
+    Comment    ${value1}    Get Value    xpath=//*[@id='username']
+    Comment    Should Be Equal    ${value1}    admin
+    Comment    ${value2}    Get Value    xpath=//*[@id='password']
+    Comment    Should Be Equal    ${value2}    admin
+    # 方法二
+    Comment    open browser    http://192.168.1.37:81/user/login    gc
+    Comment    sleep    3
+    Comment    Maximize Browser Window    # 浏览器最大化
+    Comment    input text    xpath=//*[@id='username']    admin    # 输入用户
+    Comment    Input Password    xpath=//*[@id='password']    123456    # 输入密码
+    Comment    ${value1}    Get Value    xpath=//*[@id='username']    # 获取输入的用户名
+    Comment    Should Be Equal    ${value1}    admin    # 进行比对值是否相等
+    Comment    ${value2}    Get Value    xpath=//*[@id='password']    # 获取输入的密码
+    Comment    Should Be Equal    ${value2}    123456    # 进行比对值是否相等
+    Comment    click button    xpath=//*[@id='formLogin']/div/div[3]/div/div/span/button    \    # 点击登陆按钮
+    Comment    Sleep    2
+
+业务质量模块
+    LoginSuccess
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]    \    # 点击业面服务质量的下拉菜单
+    Sleep    2
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]/ul/li[1]    \    #服务质量的菜单
+    sleep    2
+    input text    xpath=//input[@class='ant-input']    公园支行    #左侧组织数进行查找
+    sleep    2
+    Press Keys    xpath=//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/span/span    \    #点击搜索图标
+    sleep    2
+    input text    xpath=//div[@class="ant-form-item-control-wrapper"]/div/span/input    1    #输入业务号
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div[2]/div/div/div[2]/div/span/input    3    #输入呼叫号
+    sleep    2
+    input text    xpath=//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[1]/form/div[2]/div[2]/div/div[2]/div/span/input    雨零晨    #输入员工姓名
+    sleep    2
+    click button    xpath=//span[@class="table-page-search-submitButtons"]/button[1]    #点击查询按钮
+    sleep    2
+    click button    xpath=//span[@class="table-page-search-submitButtons"]/button[2]    #点击重置按钮
+    sleep    2
+    #页面跳转页
+    页面数据页的跳转
+    click button    xpath=//span[@class="table-page-search-submitButtons"]/button[2]    #点击重置按钮
+    sleep    2
+    click element    xpath=//tbody[@class="ant-table-tbody"]/tr/td[8]/span    #页面数据数据的详细察看
+    sleep    2
+
+统计分析页
+    LoginSuccess
+    Sleep    2
+    click Element    xpath=//*[@id='app']/div/div[1]/div/ul/li[3]/a    \    # 点击统计分析列表
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/span/input    光华支行    # 左侧组织树
+    sleep    2
+    log    光华支行输入成功
+    Press Key    xpath=//div[@class="ant-card-body"]/div/span/input    \\13    # 键盘的enter
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div/span/input    日照九银村镇     # 输入机构名称
+    sleep    2
+    log    机构名称输入成功
+    Press Keys    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/input    \ue003    # 删除文本内内容["\\8 ",\ue003 也可以删除]
+    log    文本框中的内容全部删除成功！！！
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/input    72717    # 机构ID
+    sleep    2
+    log    机构id输入成功！！！
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/span    \    # 日期选择
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    log    日期获取成功！！
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[4]/span/button[1]    \    # 查询按钮
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[4]/span/button[2]    \    # 重置按钮
+    sleep    4
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[4]/span/button[3]    \    # 导出按钮
+    sleep    2
+    Comment    页面数据页的跳转
+    Comment    click Element    xpath=//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[8]/span/a    \    # 数据列表中数据的详情
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(8).find("a")[0].click()    #点击查看
+    sleep    2
+    log    页面点击察看成功!!!!
+    # 关闭浏览器
+
+机构管理页
+    LoginSuccess
+    click Element    xpath=//*[@id='app']/div/div[1]/div/ul/li[4]/a    \    # 打开机构管理页
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div/span/input    光华支行    # 机构名称的输入
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/input    72717    # 机构的id
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/div/div    \    #打开所属区下下拉菜单
+    log    打开下拉菜单
+    sleep    2
+    Press key    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/div/div    \ue015    # 键盘向下
+    sleep    2
+    Press key    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/div/div    \\13    # 键盘enter键
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/span/div/button[1]    \    # 点击查询按钮
+    log    点击查询按钮
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/span/div/button[2]     \    # 点击重置按钮
+    sleep    3
+    log    点击重置按钮
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据    # 复选框按钮
+    sleep    2
+    click Element     xpath=//div[@class="ant-card-body"]/div[2]/div/button    #点击查看    # 点击编辑按钮
+    sleep    2
+    log    点击编辑按钮成功，可以打开编辑页
+    input text    id=memo    test    # 备注内容
+    click Element    xpath=//div[@class="ant-modal-footer"]/div/button[2]    \    #修改完后点击确定按钮
+    sleep    2
+    页面数据页的跳转
+    Comment    Execute Javascript    $(".ant-select-selection__rendered").eq(1).click()
+
+Index
+    open browser    http://192.168.1.37:81/user/login    gc
+    input text    xpath=//*[@id='username']    admin    # 输入用户名
+    ${user}    Get Value    xpath=//*[@id='username']
+    Comment    ${user}    Set Variable    admin    # 设置用户名为admin
+    Input Password    xpath=//*[@id='password']    123456    # 输入密码
+    ${pwd}    Get Value    xpath=//*[@id='password']
+    Comment    ${pwd}    Set Variable    admin
+    Run Keyword If    '${user}'=='admin' and '${pwd}'== '123456'    click button    xpath=//*[@id='formLogin']/div/div[3]/div/div/span/button
+    ...    ELSE    log    用户名错误或密码错误    # 将输入的值进行比较
+    log    用户名和密码输入正确
+
+职员管理
+    LoginSuccess
+    click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[5]/a    \    # 打开职员管理页
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div/span/input    方圆    # 输入员工姓名
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/input    009887    # 输入工号
+    sleep    2
+    click button    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/button[1]    \    # 点击确定按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/button[2]     \    # 取消按钮
+    sleep    2
+    页面数据页的跳转
+
+语言规范管理
+    LoginSuccess
+    click Element    xpath=//*[@id='app']/div/div[1]/div/ul/li[6]    \    # 打开语言规范管理页
+    log    语言规范已打开
+    sleep    2
+    click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[6]/ul/li[1]    #打开关键词管理规范页
+    sleep    2
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div    \    # 打开关键字下拉菜单
+    log    已打开下拉菜单
+    sleep    2
+    press key    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div/span/div/div     \ue015    # 进行下拉菜单
+    sleep    2
+    press key    xpath=//div[@class="ant-card-body"]/div/form/div/div/div/div[2]/div/span/div/div    \\13    # 点击enter键
+    sleep    2
+    press key    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/div/div    \ue015    # 下拉选择是否禁用
+    sleep    2
+    press key    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/div/div    \\13    # 点击enter键
+    sleep    3
+    click Element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/span    \    # 点击弹出日期
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[30].click()    \    # 日期选择
+    log    日期获取成功！！
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[4]/div/div[2]/div/span/input    礼貌用语    # 输入关键字名称
+    sleep    2
+    click button    xpath=//span/button[1]    \    # 点击查询按钮
+    log    查询点击成功
+    sleep    2
+    click button    xpath=//span/button[2]    \    # 点击重置按钮
+    log    查询点击成功
+    sleep    2
+    Comment    以下是新增数据
+    click Element    xpath=//div[@class='table-operator']/button[1]    \    # 新增按钮
+    sleep    2
+    log    新增按钮已打开
+    input text    id=keyName    测试，你走开    # 输入关键字名称
+    sleep    2
+    click Element    xpath=//*[@id='keyTypeId']/div    # 点开关键字的下拉菜单
+    sleep    2
+    press key    xpath=//*[@id='keyTypeId']/div    \ue015    # 键盘输入进行选择
+    sleep    2
+    press key    xpath=//*[@id='keyTypeId']/div    \\13    # 键盘上的enter键
+    log    下拉数据选择成功
+    sleep    2
+    click Element    xpath=//*[@id='isEnable']/div    # 点开是否启用的下拉菜单
+    press key    xpath=//*[@id='isEnable']/div    \ue015    # 键盘输入进行选择
+    sleep    2
+    press key    xpath=//*[@id='isEnable']/div    \\13
+    log    下拉数据选择成功
+    Comment    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    # 弹窗中的取消按钮
+    sleep    2
+    click element    id=startTime    # 点击选择开始时间
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[10].click()    # 31日，开始时间
+    click element    xpath=//span[@class="ant-calendar-footer-btn"]/a[3]    # 时间里面的确定按钮
+    # 时间开始/结束
+    sleep    2
+    click element    id=endTime    # 点击选择结束时间
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[30].click()    # 31日，结束时间
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 弹窗中的确定按钮
+    sleep    2
+    #以下是数据的删除
+    click Element    xpath=//tbody[@class="ant-table-tbody"]/tr[1]/td[1]/span[1]    # 选择数据,进行删除    # 选择第一条数据
+    log    第一条数据选择成功
+    sleep    2
+    click Element    xpath=//div[@class='table-operator']/button[2]    \    # 删除按钮
+    log    点击删除按钮成功
+    sleep    2
+    Comment    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[1]    # 点击弹窗中的取消按钮
+    Comment    log    弹窗中的取消点击成功
+    Comment    sleep    2
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    # 点击弹窗中的确定按钮
+    log    弹窗中的确定点击成功
+    sleep    2
+    comment    启用按钮
+    click Element    xpath=//tbody[@class="ant-table-tbody"]/tr[1]/td[1]/span[1]    # 选择数据,进行启用
+    click Element    xpath=//div[@class='table-operator']/button[3]    \    # 启用按钮
+    sleep    2
+    log    数据修改启用成功
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    # 点击弹窗中的确定按钮
+    log    弹窗中的确定点击成功
+    sleep    2
+    comment    禁用按钮
+    click Element    xpath=//tbody[@class="ant-table-tbody"]/tr[1]/td[1]/span[1]    # 选择数据,进行禁用
+    click Element    xpath=//div[@class='table-operator']/button[4]    \    # 禁用按钮
+    sleep    2
+    log    点击禁用成功
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    # 点击弹窗中的确定按钮
+    log    弹窗中的确定点击成功
+    sleep    2
+    comment    点击操作中的编辑按钮
+    click element    xpath=//tbody[@class="ant-table-tbody"]/tr[1]/td[8]/span[1]
+    sleep    2
+    log    编辑按钮点击成功
+    input text    id=keyName    \ue003    # 删除测试，你走开的文字
+    sleep    2
+    input text    id=keyName    测试，回来回来回来!!!!    # 重新填写文本内容
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 弹窗中的确定按钮
+    sleep    2
+    # 拉取滚动条在最底端
+    Execute Javascript    document.documentElement.scrollTop=0
+    sleep    2
+    页面数据页的跳转
+
+设备管理页
+    LoginSuccess
+    click Element    xpath=//*[@id='app']/div/div[1]/div/ul/li[7]    \    # 设备管理页
+    log    设备管理页展示
+    sleep    2
+    click element    xpath=//*[@id='app']/div/div[1]/div/ul/li[7]/ul/li[1]/a    \    # 摄像头管理页
+    sleep    2
+    input text    xpath=//span[@class="ant-form-item-children"]/input    jc    # 输入摄像头名称
+    sleep    2
+    click Button    xpath=//div[@class="ant-col-8"]/span/button[1]    # 点击查询的按钮
+    sleep    2
+    click Button    xpath=//div[@class="ant-col-8"]/span/button[2]    # 点击重置的按钮
+    # 摄像头管理页数据的新增
+    click element    xpath=//div[@class="table-operator"]/button[1]    # 点击新增按钮
+    sleep    2
+    log    新增按钮成功
+    Comment    click element    xpath=//div[@class="table-operator"]/button[2]    # 点击删除按钮
+    Comment    sleep    2
+    click Button    xpath=//span[@class="ant-input-suffix"]/button[1]    #点击搜索按钮
+    log    点击搜索按钮
+    sleep    2
+    click element    xpath=//span/ul[@class="ant-tree ant-tree-icon-hide"]/li/span/i    # 点击下拉按钮
+    sleep    2
+    log    下拉弹窗点击成功
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/span/i    # 九江银行下的分行
+    sleep    2
+    log    九江银行下的分行
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/ul/li[3]    # 九江银行滨江支行
+    sleep    2
+    log    下级菜单-->滨江支行点击成功
+    Execute Javascript    $(".ant-modal-wrap.ant-modal-cust-warp").scrollTop(5000)    # 滚动条拉动到最底端
+    log    滑动滚动条到屏幕的最底端
+    sleep    5
+    Execute Javascript    $(".ant-modal-footer").eq(1).find("button").eq(1).click()    # 确定按钮
+    Comment    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 确定按钮
+    Comment    log    选择下级菜单后的-->点击确定按钮
+    # 以下是数据编辑
+    sleep    2
+    input text    xpath=//*[@id="deviceName"]    滨江-test    # 输入摄像头的名称
+    sleep    2
+    input text    xpath=//*[@id="rstpAddr"]    复制视频流地址    # rtsp
+    sleep    2
+    input text    xpath=//*[@id="memo"]    测试添加的视频流情况    # 备注
+    sleep    2
+    input text    xpath=//*[@id="counterNum"]    3    # 这是窗口号
+    click button    xpath=//div[@class="ant-modal-content"]/div[3]/div/button[2]    # 点击确定按钮
+    sleep    3
+    Execute Javascript    window.TEST_01(3,0,"input")    # 选中多条数据中的一条
+    log    第一条数据选择成功
+    sleep    2
+    click element    xpath=//div[@class="ant-table-body-outer"]/div/table/tbody/tr[2]/td/span/a[1]    # 点击编辑按钮，进行文本编辑
+    sleep    2
+    input text    xpath=//*[@id="deviceName"]    点击编辑之后的摄像头进行修改    # 修改文本框的值
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 修改之后的确定按钮
+    sleep    2
+    Execute Javascript    window.TEST_01(1,0,"input")    # 选中多条数据中的一条，进行删除
+    sleep    2
+    click element    xpath=//div[@class="table-operator"]/button[2]    # 点击删除按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    # 点击弹窗的删除的确认按钮
+    log    删除成功！！！！
+    sleep    2
+    页面数据页的跳转
+
+场景管理
+    LoginSuccess
+    click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]    \    # 设备管理页
+    log    设备管理页展示
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]/ul/li[2]/a    \    # 场景管理页
+    sleep    2
+    input text    xpath=//div[@class="ant-row"]/div/div/div[2]/div/span/input    光华    # 场景名称的输入
+    sleep    2
+    input text    xpath=//div[@class="ant-row"]/div[2]/div/div[2]/div/span/input    光华支行    # 输入机构的名称
+    sleep    2
+    click button    xpath=//div[@class="ant-row"]/div[3]/span/button[1]    # 点击确定的按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-row"]/div[3]/span/button[2]    # 点击重置的按钮
+    sleep    2
+    # 新增按钮下的所有弹窗内容
+    click element    xpath=//div[@class="table-operator"]/button[1]    # 点击新增按钮
+    sleep    3
+    log    新增按钮成功
+    Comment    click element    xpath=//div[@class="table-operator"]/button[2]    # 点击删除按钮
+    sleep    2
+    click Button    xpath=//span[@class="ant-input-suffix"]/button[1]    #点击搜索按钮
+    log    点击搜索按钮
+    sleep    2
+    click element    xpath=//span/ul[@class="ant-tree ant-tree-icon-hide"]/li/span/i    # 点击下拉按钮
+    sleep    2
+    log    下拉弹窗点击成功
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/span/i    # 九江银行下的分行
+    sleep    2
+    log    九江银行下的分行
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/ul/li[3]    # 九江银行滨江支行
+    sleep    2
+    log    下级菜单-->滨江支行点击成功
+    Execute Javascript    $(".ant-modal-wrap.ant-modal-cust-warp").scrollTop(5000)    # 滚动条拉动到最底端
+    log    滑动滚动条到屏幕的最底端
+    sleep    5
+    Execute Javascript    $(".ant-modal-footer").eq(1).find("button").eq(1).click()    # 确定按钮
+    input text    id=sceneName    场景名称-滨江test    # 场景名称的输入
+    sleep    2
+    input text    id=memo    自动化增加的数据    # 备注按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 点击确定按钮
+    sleep    2
+    # 数据的选择/编辑/删除
+    Execute Javascript    window.TEST_02(".main .ant-table tbody",0,0,"input")    # 选中第一条数据进行编辑
+    log    第一条数据选择成功
+    sleep    2
+    click element    xpath=//div[@class="ant-table-content"]/div/table/tbody/tr/td[7]/span/a[1]
+    Comment    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(6).find("span").find("a")    # 点击编辑按钮，进行文本编辑
+    sleep    2
+    input text    id=sceneName    编辑之后修改的名称
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    # 编辑之后的确定按钮
+    sleep    2
+    click element    xpath=//div[@class="table-operator"]/button[2]    # 点击删除按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    # 点击弹窗的删除的确认按钮
+    log    删除成功！！！！
+    sleep    2
+    页面数据页的跳转
+
+PSM客户机日志
+    LoginSuccess
+    click Element    xpath=//*[@id='app']/div/div[1]/div/ul/li[7]    \    # 设备管理页
+    log    设备管理页展示
+    sleep    2
+    click element    xpath=//*[@id='app']/div/div[1]/div/ul/li[7]/ul/li[3]/a    \    # PSM客户机
+    sleep    2
+    input text    xpath=//input[@class="ant-input"]    公园支行    #组织树
+    sleep    2
+    Press key    xpath=//input[@class="ant-input"]    \\13    # enter键盘
+    sleep    2
+    click element    xpath=//tbody[@class="ant-table-tbody"]/tr/td/span/label    # 选中数据
+    sleep    2
+    click element    xpath=//div[@class="ant-row"]/div/span/button[2]    # 点击查看按钮，展示详情数据
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    # 点击详情页的确定按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-row"]/div/span/button[1]    # 点击详情页的确定按钮
+    sleep    2
+    Comment    # 页数的跳转
+    Comment    input text    xpath=//div[@class="ant-pagination-options-quick-jumper"]/input    2    # 输入页数，调转到第二页
+    Comment    log    第二页跳转成功
+    Comment    sleep    5
+    Comment    press key    xpath=//div[@class="ant-pagination-options-quick-jumper"]/input    \\13    # 获取键盘上的enter键
+    Comment    sleep    2
+    Comment    log    页面跳转成功
+    页面数据页的跳转
+
+测试用
+    LoginTestFail
+    sleep    4
+    PSM客户机日志
+
+LoginSuccess
+    open browser    http://192.168.1.37:81/user/login    gc    # 谷歌浏览器
+    sleep    3
+    Maximize Browser Window    # 浏览器最大化
+    input text    xpath=//*[@id='username']    admin    # 输入用户
+    Input Password    xpath=//*[@id='password']    123456    # 输入密码
+    sleep    2
+    click button    xpath=//*[@id='formLogin']/div/div[3]/div/div/span/button    \    # 点击登陆按钮
+    log    用户名和密码登陆成功！
+    Sleep    2
+
+页面数据页的跳转
+    # 页数的跳转
+    # 输入数值的跳转
+    input text    xpath=//div[@class="ant-pagination-options-quick-jumper"]/input    5    # 输入页数，调转到第二页
+    log    第二页跳转成功
+    sleep    5
+    press key    xpath=//div[@class="ant-pagination-options-quick-jumper"]/input    \\13    # 获取键盘上的enter键
+    sleep    2
+    log    页面跳转成功
+    # 点击left/rigth进行跳转
+    Execute Javascript    $(".ant-pagination-item-link").find(".anticon.anticon-left").click()    # 点击向左的按钮
+    sleep    2
+    #判断页数
+    Comment    ${count}    Get Value    xpath=//*[@id='password']
+    Execute Javascript     $(".ant-pagination-item-link").find(".anticon.anticon-right").click()     #点击向右的按钮
+    sleep    2
+    Comment    Execute Javascript    $(".ant-pagination-item-link").find(".anticon.anticon-right").click()    #点击向右的按钮
+    # 点击10/20/30页的数据跳转排序
+    Execute Javascript    $(".ant-select-selection.ant-select-selection--single").click()    #点击页数按钮
+    Comment    Execute Javascript    $(".ant-select-selection.ant-select-selection--single").click()    #点击数据
+    sleep    1
+    Execute Javascript    $(".ant-select-dropdown-menu.ant-select-dropdown-menu-vertical.ant-select-dropdown-menu-root").find("li").eq(1).click()    # 选择20页
+    sleep    2
+
+算法盒子管理
+    LoginSuccess
+    click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]    \    # 设备管理页
+    log    设备管理页的展示
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]/ul/li[4]/a    \    # 算法盒子管理页
+    sleep    2
+    input text    xpath=//input[@class="ant-input"]    公园支行    #组织树
+    sleep    2
+    Press key    xpath=//input[@class="ant-input"]    \\13    # enter键盘
+    # 输入框的检测
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[1]/div/div[2]/div/span/input    公园支行    # 输入机构的名称
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    72717    # 输入机构的id
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[3]/div/div[2]/div/span/input    192.168.1.44    # 输入机构的psm的ip
+    sleep    2
+    Comment    Execute Javascript    $(".ant-input").eq(1).val("公园支行")    # 输入机构的名称
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".ant-input").eq(2).val("72717")    # 输入机构的id
+    Comment    sleep    1
+    Comment    Execute Javascript    $(".ant-input").eq(3).val("192.168.1.44")    # 输入机构的psm的ip
+    Comment    sleep    1
+    Execute Javascript    $(".ant-select-selection__placeholder").eq(0).click()    #下拉选择sasd的升级状态
+    sleep    1
+    Execute Javascript    $(".ant-select-dropdown-content").eq(0).find("ul").find("li").eq(0).click()    #选择null
+    sleep    2
+    Execute Javascript    $(".ant-select-selection__placeholder").eq(1).click()    #psm下拉
+    sleep    1
+    Execute Javascript    $(".ant-select-dropdown-content").find("ul").eq(1).find("li").eq(0).click()    #选择全部机构
+    sleep    1
+    #查询/重置按钮
+    Execute Javascript    $(".ant-col-sm-24.ant-col-md-6").find("button").eq(0).click()    #点击查询的按钮
+    sleep    2
+    Execute Javascript    $(".ant-col-sm-24.ant-col-md-6").find("button").eq(1).click()    #点击重置的按钮
+    sleep    2
+    Execute Javascript    window.TEST_02(".main .ant-table tbody",0,0,"input")    #勾选复选框
+    sleep    2
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(1).find("td").eq(10).find("a")[0].click()    #点击编辑按钮
+    sleep    2
+    input text    id=psmPlace    自动化测试使用    #填写的是psm位置
+    sleep    2
+    Comment    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    #点击取消的按钮
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    #点击确定的按钮
+    sleep    2
+    页面数据页的跳转
+
+升级管理
+    LoginSuccess
+    #升级管理页面
+    click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]    \    # 设备管理页
+    log    设备管理页的展示
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[7]/ul/li[5]/a    \    # 算法盒子管理页
+    #输入框内容检测
+    input text    xpath=//span[@class="ant-form-item-children"]/input    upd-20210714-2.0.5.zip
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    2.0.5
+    Comment    Execute Javascript    $(".ant-form-item-control").eq(0).find("span").find("input").val("upd-20210714-2.0.5.zip")    \    #输入升级包名称
+    sleep    2
+    input text    xpath=
+    Comment    Execute Javascript    $(".ant-form-item-control").eq(1).find("span").find("input").val("2.0.5")    \    #输入升级版本号
+    Comment    sleep    1
+    Comment    Execute Javascript    $(".ant-select.ant-select-enabled").eq(0).click()    \    #升级类型的下拉弹窗
+    sleep    1
+    Comment    Execute Javascript    $(".ant-select-dropdown-content").find("ul").find("li").eq(0).click()    \    #下拉选择sasd
+    Comment    sleep    1
+    #点击查询按钮
+    Comment    click button    xpath=//span[@class="table-page-search-submitButtons"]/button[2]
+
+服务质量总表
+    LoginSuccess
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2] \    #总模块菜单
+    sleep    2
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]/ul/li[2]    \    # 服务质总表
+    log    点击服务质量总表
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[1]/div/div[2]/div/span/input    王小九    # 员工姓名
+    log    输入员工的姓名：小小哒
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    001    # 工号
+    log    输入员工的工号：001
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(0).click()    #打开下拉违规类型
+    log    下拉菜单已打开
+    sleep    2
+    Comment    ${aria-controls}    Get Element Attribute    xpath=//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div/div/div[1]/form/div[2]/div[1]/div/div[2]/div/span/div/div    aria-controls    # 下拉选择仪容仪表
+    Comment    Click Element    xpath=//*[@id="60e35635-5bd1-4cf2-a525-4ba3baf93c14"]/ul/li[1]
+    Comment    Wait Until Keyword Succeeds
+    Execute Javascript    $(".ant-select-dropdown-content").find("ul").find("li").eq(0).click()    #选择仪容仪表项
+    log    已选择仪容仪表
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(1).click()    #下拉违规项
+    sleep    2
+    Execute Javascript    $(".ant-select-dropdown-content").eq(1).find("ul").find("li").eq(0).click()    #选择撑头项
+    log    已选择撑头项
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[1]    #点击查询按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[2]    #点击重置按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[3]    #点击导出按钮
+    页面数据页的跳转
+    #数据的详细查看
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    Execute Javascript    $(".ant-table-body").find("td").eq(10).find("a")[0].click()    #点击查看
+    sleep    1
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    #点击确定按钮
+    sleep    1
+    Execute Javascript    $(".ant-table-body").find("td").eq(10).find("a")[1].click()    #点击申诉
+    sleep    2
+    input text    xpath=//textarea[@class="ant-input"]    测试文本内容的填写    #填写申诉的理由
+    sleep    2
+    Execute Javascript    $(".ant-modal-footer").eq(1).find("div").find("button").eq(1).click()    #点击提交按钮
+    sleep    2
+
+申诉处理页
+    LoginSuccess
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]    #总模块菜单
+    sleep    2
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]/ul/li[3]    #申诉处理页
+    log    申诉页点击成功
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[1]/div/div[2]/div/span/input    李璀    #员工姓名
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    001782    #员工工号
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(0).click()    #打开下拉违规类型
+    log    下拉菜单已打开
+    Execute Javascript    $(".ant-select-dropdown-content").find("ul").find("li").eq(0).click()    #选择仪容仪表项
+    log    已选择仪容仪表
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(1).click()    #下拉违规项
+    sleep    2
+    Execute Javascript    $(".ant-select-dropdown-content").eq(1).find("ul").find("li").eq(0).click()    #选择撑头项
+    log    已选择撑头项
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[1]    #点击查询按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[2]    #点击重置按钮
+    sleep    2
+    页面数据页的跳转
+    #数据的详细查看
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(11).find("a")[0].click()    #点击查看
+    sleep    2
+    log    页面点击察看成功!!!!
+    #点击查看后的取消/删除按钮
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    #点击确定按钮
+    sleep    2
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(11).find("a")[1].click()    #点击同意
+    sleep    2
+    #填写弹窗中的确定
+    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    #点击同意弹窗中的取消
+    sleep    2
+    Comment    click button    xpath=//div[@class="ant-modal-confirm-btns"]/button[2]    #点击同意弹窗中的取消
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".ant-table-tbody").find("tr").eq(4).find("td").eq(11).find("a")[2].click()    #点击拒绝
+    Comment    input text    xpath=//textarea[@class="ant-input"]    申诉不予通过！！！！    #填写申诉的理由
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".ant-modal-footer").eq(1).find("div").find("button").eq(1).click()    #点击提交按钮
+    sleep    2
+
+申述结果页
+    LoginSuccess
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]    #总模块菜单
+    sleep    2
+    Comment    Execute Javascript    $(".ant-layout-sider-children").find("ul").eq(0).find("li").eq(5).click()    #申诉结果页
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]/ul/li[4]    #申诉结果页
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[1]/div/div[2]/div/span/input    李璀    #员工姓名
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    001782    #员工工号
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(0).click()    #打开下拉违规类型
+    log    下拉菜单已打开
+    Execute Javascript    $(".ant-select-dropdown-content").find("ul").find("li").eq(0).click()    #选择仪容仪表项
+    log    已选择仪容仪表
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(1).click()    #下拉违规项
+    sleep    2
+    Execute Javascript    $(".ant-select-dropdown-content").eq(1).find("ul").find("li").eq(0).click()    #选择撑头项
+    log    已选择撑头项
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(2).click()    #下拉申诉成功/失败
+    sleep    2
+    click element    xpath=//div[@class="table-page-search-wrapper"]/form/div[2]/div[3]/div/div[2]/div    #下拉申诉成功
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[1]    #点击查询按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-col-6"]/span/button[2]    #点击重置按钮
+    sleep    2
+    log    重置按钮点击成功！！！页面的查询功能已实现
+    Comment    #验证申诉成功/失败
+    Comment    Execute Javascript    $(".ant-select.ant-select-enabled").eq(2).click()    #下拉申诉成功/失败
+    Comment    sleep    2
+    Comment    click element    xpath=//div[@class="ant-select-dropdown-content"]/ul/li[1]    #下拉申诉成功
+    Comment    sleep    2
+    Comment    click button    xpath=//div[@class="ant-col-6"]/span/button[1]    #点击查询按钮
+    Comment    sleep    5
+    Comment    click button    xpath=//div[@class="ant-col-6"]/span/button[2]    #点击重置按钮
+    Comment    sleep    2
+    Comment    #数据的选择
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(11).find("a")[0].click()    #点击查看
+    sleep    2
+    log    页面点击察看成功!!!!
+    #点击查看后的取消/删除按钮
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    #点击确定按钮
+    sleep    2
+
+系统管理页
+    LoginSuccess
+    #点击系统管理页
+    sleep    2
+    click element    xpath=//*[@id='app']/div/div[1]/div/ul/li[9]    #打开系统管理页
+
+系统_岗位管理
+    系统管理页
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[9]/ul/li[1]/a    #岗位管理页面
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[1]/div/div[2]/div/span/input    分行行长    #岗位名称
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    #查询和重置的按钮
+    click button    xpath=//div[@class="ant-card-body"]/div/form/div/span/div/button[1]    #确定按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-card-body"]/div/form/div/span/div/button[2]    #重置按钮
+    sleep    2
+    click button    xpath=//div[@class="table-operator"]/button[1]    #新增按钮
+    sleep    2
+    Comment    click button    xpath=//div[@class="table-operator"]/button[1]    #删除按钮
+    input text    id=roleName    自动化测试使用    #弹窗岗位名称
+    sleep    2
+    input text    id=roleCode    TEST01    #岗位管理
+    sleep    2
+    input text    id=description    自动化测试填写的内容    #描述
+    sleep    2
+    Comment    click button    xpath=//div[@class="ant-modal-footer"]/div/button[1]    #取消按钮
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    #确定按钮
+    sleep    2
+    Execute Javascript    $(".ant-table-row.ant-table-row-level-0").eq(0).find("td").eq(0).find("span").find("label").click()    #复选框的勾选
+    sleep    2
+    Execute Javascript    $(".ant-table-row.ant-table-row-level-0").eq(0).find("td").eq(5).find("a")[0].click()    #点击编辑按钮
+    sleep    2
+    #修改数据
+    input text    id=roleName    自动化点击的编辑按钮    #弹窗岗位名称
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    #确定按钮
+    sleep    2
+    #点击授权
+    Execute Javascript    $(".ant-table-row.ant-table-row-level-0").eq(0).find("td").eq(5).find("a")[1].click()    #点击授权按钮
+    sleep    2
+    click element    xpath=//div[@class="ant-form-item-control"]/span/ul/li[1]/span[2]/span    #授权前面的复选框
+    sleep    2
+    click button    xpath=//div[@class="ant-modal-footer"]/div/button[2]    #确定按钮
+    sleep    2
+
+用户管理
+    系统管理页
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[9]/ul/li[2]/a    #用户管理页面
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[1]/div/div[2]/div/span/input    002770    #用户管理
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/div    #性别
+    sleep    2
+    click element    xpath=//div[@class="ant-select-dropdown-content"]/ul/li[2]    #下拉选择性别
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/button[1]    #查询按钮
+    sleep    2
+    #点击展开按钮
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/a    #点击展开按钮
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/div/div[2]/div/span/input    123@qq.com    #邮箱
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[4]/div/div[2]/div/span/input    121212121    #手机号
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[5]/div/div[2]/div/span/div    \    #下拉选选择状态
+    sleep    2
+    Execute Javascript    $(".ant-select-dropdown").eq(1).find("li").eq(1).click()    #下拉选择解冻/正常
+    sleep    2
+    #按钮的点击
+    click button    xpath=//div[@class="ant-card-body"]/div/form/div/div[6]/span/button[1]    #点击查询按钮
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[6]/span/a    #点击收起的按钮
+    sleep    2
+    Execute Javascript    $(".table-operator").find("button").eq(0).click()    #点击添加用户
+    sleep    2
+    input text    id=username    测试自动化mz01    #用户帐号
+    sleep    2
+    input text    id=password    123456
+    sleep    2
+    input text    id=confirmpassword    123456
+    sleep    2
+    input text    id=realname    自动化测试
+    sleep    2
+    click Button    xpath=//span[@class="ant-input-suffix"]/button[1]    #点击搜索按钮
+    log    点击搜索按钮
+    sleep    2
+    click element    xpath=//span/ul[@class="ant-tree ant-tree-icon-hide"]/li/span/i    # 点击下拉按钮
+    sleep    2
+    log    下拉弹窗点击成功
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/span/i    # 九江银行下的分行
+    sleep    2
+    log    九江银行下的分行
+    click element    xpath=//ul/li[@class="ant-tree-treenode-switcher-open"]/ul/li/ul/li[3]    # 九江银行滨江支行
+    sleep    2
+    log    下级菜单-->滨江支行点击成功
+    Execute Javascript    $(".ant-modal-wrap.ant-modal-cust-warp").scrollTop(5000)    # 滚动条拉动到最底端
+    log    滑动滚动条到屏幕的最底端
+    sleep    5
+    Execute Javascript    $(".ant-modal-footer").eq(1).find("button").eq(1).click()
+    sleep    5
+    #弹窗中的确定
+    Execute Javascript    $(".ant-modal-footer").find("button").eq(1).click()    # 确定按钮
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    #选择第一条数据
+    sleep    2
+    Execute Javascript    $(".table-operator").find("button").eq(1).click()    #点击删除用户
+    sleep    2
+    Execute Javascript    $(".ant-modal-confirm-btns").find("button").eq(1).click()    #点击同意弹窗中的确定
+    sleep    2
+    Comment    Execute Javascript    $(".table-operator").find("button").eq(2).click()    #点击冻结用户
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".table-operator").find("button").eq(3).click()    #点击解冻用户
+    sleep    2
+    #操作中的编辑
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(0).find("span").eq(2).click()    #选中数据点击编辑按钮
+    sleep    2
+    Execute Javascript    $(".ant-table-row.ant-table-row-level-0").eq(0).find("td").eq(9).find("span").find("a")[0].click()    #点击编辑按钮
+    sleep    2
+    input text    xpath=//*[@id="realname"]    陈晓芳自动化测试用
+    sleep    2
+    Execute Javascript    $(".ant-modal-footer").find("button").eq(1).click()    # 确定按钮
+    Comment    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(10).find("a")[1].click()    #点击编辑修改密码按钮
+    #修改密码
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(0).find("span").eq(2).click()    #选中数据点击编辑按钮
+    sleep    2
+    Execute Javascript    $(".ant-table-row.ant-table-row-level-0").eq(0).find("td").eq(9).find("span").find("a")[1].click()    #点击编辑按钮
+    sleep    2
+    input text    id=password    123456
+    sleep    2
+    input text    id=confirmpassword    123456
+    sleep    2
+    Execute Javascript    $(".ant-modal-footer").eq(1).find("button").eq(1).click()    # 确定按钮
+
+我的消息
+    系统管理页
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[9]/ul/li[3]/a    #用户消息页面
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[1]/div/div[2]/div/span/input    123    #标题
+    sleep    2
+    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/div/div[2]/div/span/input    admin    #发布人
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/button[1]    \    #确定按钮
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[3]/span/button[2]    \    #重置按钮
+    sleep    2
+    click element    xpath=//div[@class="table-operator"]/button    #点击全部已读的按钮
+    sleep    2
+    Execute Javascript    $(".ant-modal-confirm-btns").find("button").eq(1).click()    #点击同意弹窗中的确定
+    sleep    2
+    log    数据全部已读状态
+    页面数据页的跳转
+
+系统通告
+    系统管理页
+    sleep    2
+    click element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[9]/ul/li[8]/a    #系统通告页面
+    sleep    2
+    Comment    input text    xpath=//div[@class="ant-card-body"]/div/form/div/div[1]/div/div[2]/div/span/input    123    #请输入标题
+    Comment    sleep    2
+    Comment    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/span/button[1]    \    #确定按钮
+    Comment    sleep    2
+    Comment    click element    xpath=//div[@class="ant-card-body"]/div/form/div/div[2]/span/button[2]    \    #重置按钮
+    Comment    sleep    2
+    Comment    click element    xpath=//div[@class="table-operator"]/button[1]    \    #点击新增按钮
+    Comment    sleep    2
+    Comment    #新增内容的填写
+    Comment    input text    id=titile    自动化测试    #填写标题
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".ant-select.ant-select-enabled").eq(1).click()    #选择消息的类型
+    Comment    sleep    2
+    Comment    Execute Javascript    $(".ant-select-dropdown-content").find("li").eq(0).click()    #选择通知公告
+    Comment    sleep    2
+    Comment    #使用iframe框架
+    Comment    select frame    xpath=//div[@class="tox-sidebar-wrap"]/div/iframe    #选择iframe框架
+    Comment    sleep    2
+    Comment    input text    id=tinymce    这是自动化测试的内容    #内容的填写
+    Comment    unselect frame
+    Comment    #通知公告的点击
+    Comment    sleep    3
+    Comment    Execute Javascript    $(".ant-select-dropdown-content").find("li").eq(1).click()
+    Comment    sleep    1
+    Comment    Execute Javascript    $(".ant-select-dropdown-content").eq(1).find("ul").find("li").eq(1).click()    #选择全体用户
+    Comment    sleep    2
+    Comment    #确定/取消按钮
+    Comment    Execute Javascript    $(".ant-modal-footer").find("button").eq(1).click()    # 确定按钮
+    sleep    2
+    Comment    click element    xpath=//div[@class="table-operator"]/button[2]    \    #点击导出按钮
+    Comment    sleep    2
+    Comment    log    导出成功
+    Comment    click element    xpath=//div[@class="table-operator"]/span/div/span/button    \    #点击导入按钮
+    #下方列表数据的选中
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    #编辑按钮
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(10).find("a")[0].click()
+    #编辑之后的修改内容
+    input text    id=titile    王小哒自动化测试    #标题名字
+    sleep    2
+    Execute Javascript    $(".ant-modal-footer").find("button").eq(1).click()    # 确定按钮
+    sleep    2
+    #更多的点击
+    mouse over    xpath=//tbody[@class="ant-table-tbody"]/tr[1]/td[11]/span/a[2]    #鼠标悬停在更多上，弹出删除/发布
+    sleep    3
+    Comment    Execute Javascript    $(".ant-dropdown-menu-item").eq(0).click()    #点击删除按扭
+    Comment    click element
+    Comment    sleep    2
+
+评估结果审核
+    LoginSuccess
+    sleep    2
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]    \    #点击业面服务质量的下拉菜单
+    Sleep    2
+    Click Element    xpath=//*[@id="app"]/div/div[1]/div/ul/li[2]/ul/li[5]    \    #服务质量的菜单
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[1]/div/div[2]/div/span/input    李璀    #员工姓名
+    sleep    2
+    input text    xpath=//div[@class="table-page-search-wrapper"]/form/div/div[2]/div/div[2]/div/span/input    001782    #员工工号
+    sleep    2
+    click element    xpath=//span[@class="ant-calendar-picker"]    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[20].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    document.getElementsByClassName("ant-calendar-date")[50].click()    \    # 日期选择
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(0).click()    #打开下拉违规类型
+    log    下拉菜单已打开
+    Execute Javascript    $(".ant-select-dropdown-content").find("ul").find("li").eq(0).click()    #选择仪容仪表项
+    log    已选择仪容仪表
+    sleep    2
+    Execute Javascript    $(".ant-select.ant-select-enabled").eq(1).click()    #下拉违规项
+    sleep    2
+    Execute Javascript    $(".ant-select-dropdown-content").eq(1).find("ul").find("li").eq(0).click()    #选择撑头项
+    log    已选择撑头项
+    #按钮类
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/div[3]/span/button[1]    #查询按钮
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/div[3]/span/button[2]    #重置按钮
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/div[3]/span/button[3]    #导出按钮
+    sleep    2
+    Execute Javascript    window.TEST_02("body tbody",0,0,"input")    #选择第一条数据
+    sleep    2
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/div[3]/span/button[4]    #全部正确按钮
+    sleep    2
+    #小弹窗下的取消/确定按钮
+    click element    xpath=//div[@class="ant-modal-content"]/div/div/div[2]/button[2]    #确定按钮
+    log    点击的全部正确按钮
+    sleep    2
+    Comment    click element    xpath=//div[@class="ant-modal-content"]/div/div/div[2]/button[1]    #取消按钮
+    Execute Javascript    window.TEST_02("body tbody",4,0,"input")    #选择第一条数据
+    click element    xpath=//div[@class="ant-card-body"]/div/form/div[2]/div[3]/span/button[5]    #全部不正确按钮
+    sleep    2
+    log    点击全部不正确的按钮
+    #小弹窗下的取消/确定按钮
+    click element    xpath=//div[@class="ant-modal-content"]/div/div/div[2]/button[2]    #确定按钮
+    sleep    2
+    #操作中的三个小元素[正确/不正确/查看]
+    Comment    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(12).find("a")[0].click()    #正确按钮
+    Comment    Execute Javascript    $(".ant-table-tbody").find("tr").eq(0).find("td").eq(12).find("a")[1].click()    #不正确按钮
+    Execute Javascript    $(".ant-table-tbody").find("tr").eq(5).find("td").eq(12).find("a")[2].click()    #查看按钮
+    sleep    3
+    #查看按钮下的确定
+    click element    xpath=//div[@class="ant-modal-footer"]/div/button[2]
+    sleep    2
+    log    查看已点击
+    页面数据页的跳转
